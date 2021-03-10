@@ -1,0 +1,57 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v3.json",
+  "data": {
+    "url": "https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-03-05/jobs_gender.csv",
+    "format": {
+      "type": "csv"
+    }
+  },
+  "title": {
+    "text": "Occupations - Male vs Female during period 2013 - 2016",
+    "anchor": "middle"
+  },
+  "transform": [
+    {
+      "filter": "datum.workers_male > 50000"
+    },
+    {
+      "filter": "datum.workers_female > 50000"
+    },
+    {
+      "filter": "indexof(datum.major_category, ',') < 0"
+    }
+  ],  
+ "repeat": {"column": ["workers_male","workers_female"]},
+ "spec":{
+    "selection": {
+        "occupation_selection": {"type": "multi", "fields": ["occupation"]}
+      },
+    "mark": "bar",
+    "encoding": {
+        "y": {
+        "field": "occupation",
+        "type": "nominal",
+        "axis": {"title": "Occupations"},
+        "sort": {
+            "op": "mean",
+            "field": {"repeat": "column"},
+            "order": "descending"
+        }
+        },
+        "x": {
+        "field": {"repeat": "column"},
+        "type": "quantitative",
+        "aggregate": "mean"
+        },
+        "color": {
+          "condition": {
+            "selection": "occupation_selection",
+            "field": "occupation",
+            "type":"nominal",
+            "legend":null
+            },
+          "value": "lightblue"    
+        }
+    }
+  }
+}
