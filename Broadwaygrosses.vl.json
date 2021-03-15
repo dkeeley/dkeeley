@@ -1,0 +1,65 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+  "data": {
+    "url": "https://raw.githubusercontent.com/dkeeley/dkeeley/master/grosses_2015_2019.csv",
+    "format": {
+      "type": "csv"
+    }
+  },
+  "title": {
+    "text": "Broadway Grosses - Weekly Gross vs Week Number in 2019",
+    "anchor": "middle"
+  },
+  "width": 500,
+  "height": 500,
+  "transform": [
+    {
+      "filter": "datum.weekly_gross > 500000"
+    },
+    {
+      "filter": "datum.week_number> 0"
+    }
+  ],
+  "selection": {
+    "shw": {
+      "type": "single",
+      "on":"click",
+      "fields": ["show"],
+      "bind": {"input": "select", "options": ["Aladdin", "The Book of Mormon", "The Lion King", "Wicked", "Beautiful: The Carole King Musical"]}
+    }
+  },
+  "mark": "circle",
+  "encoding": {
+    "y": {
+      "field": "weekly_gross",
+      "type": "quantitative",
+      "scale": {"domain": [500000,4000000]}
+
+    },
+    "x": {
+      "field": "week_number",
+      "type": "quantitative",
+      "scale": {"domain": [0,53]}
+
+    },
+    "color": {
+        "condition": {
+            "selection": "shw",
+            "value":"green"
+            },
+        "value": "grey"  
+    },
+    "opacity": {
+        "condition": {
+            "selection": "shw",
+            "value":1
+            },
+        "value": 0.05
+    }
+  },
+  "config": {
+    "legend": {
+      "orient": "bottom-right"
+    }
+  }
+}
