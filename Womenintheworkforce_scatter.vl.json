@@ -1,0 +1,65 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+  "data": {
+    "url": "https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-03-05/jobs_gender.csv",
+    "format": {
+      "type": "csv"
+    }
+  },
+  "title": {
+    "text": "Occupations - Female Percentage during period 2013 - 2016",
+    "anchor": "middle"
+  },
+  "width": 500,
+  "height": 500,
+  "transform": [
+    {
+      "filter": "datum.percent_female > 0"
+    },
+    {
+      "filter": "datum.year > 2013"
+    }
+  ],
+  "selection": {
+    "occ": {
+      "type": "single",
+      "on":"click",
+      "fields": ["occupation"],
+      "bind": {"input": "select", "options": ["Registered nurses", "Customer service representatives", "Bookkeeping, accounting, and auditing clerks", "Retail salespersons", "Personal care aides", "Cashiers"]}
+    }
+  },
+  "mark": "circle",
+  "encoding": {
+    "y": {
+      "field": "percent_female",
+      "type": "quantitative",
+      "scale": {"domain": [0,100]}
+
+    },
+    "x": {
+      "field": "year",
+      "type": "temporal"
+      
+
+    },
+    "color": {
+        "condition": {
+            "selection": "occ",
+            "value":"green"
+            },
+        "value": "grey"  
+    },
+    "opacity": {
+        "condition": {
+            "selection": "occ",
+            "value":1
+            },
+        "value": 0.05
+    }
+  },
+  "config": {
+    "legend": {
+      "orient": "bottom-right"
+    }
+  }
+}
