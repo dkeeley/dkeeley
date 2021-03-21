@@ -1,0 +1,60 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v2.json",
+  "data": {
+    "url": "https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-03-05/jobs_gender.csv",
+    "format": {
+      "type": "csv"
+    }
+  },
+    "title": {
+    "text": "Occupations - Female Wages as Percent of Male Wages in 2016",
+    "anchor": "middle"
+  },
+   "width": 500,
+  "height": 500,     
+  "transform": [
+    {
+      "filter": "datum.wage_percent_of_male > 90 < 100"
+    },
+    {
+      "filter": "indexof(datum.occupation, ',') > 0"
+    },
+    {  
+      "filter": "datum.year > 2015"
+    }
+  ],  
+ "repeat": {"column": ["wage_percent_of_male"]},
+ "spec":{
+    "selection": {
+        "occupation_selection": {"type": "multi", "fields": ["major_category"]}
+      },
+    "mark": "circle",
+    "encoding": {
+        "y": {
+        "field": "major_category",
+        "type": "nominal",
+        "axis": {"title": "Occupations"},
+        "sort": {
+            "op": "max",
+            "field": {"repeat": "column"},
+            "order": "descending"
+        }
+        },
+        "x": {
+        "field": {"repeat": "column"},
+        "type": "quantitative",
+        "aggregate": "max"
+        },
+        "color": {
+          "condition": {
+            "selection": "occupation_selection",
+            "field": "occupation",
+            "type":"nominal",
+            "legend":null
+            },
+          "value": "lightblue"    
+        }
+    }
+  }
+}
+  
