@@ -1,0 +1,43 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+  "data": {
+    "url": 
+"https://raw.githubusercontent.com/colmr/vis_class/master/FakeAccomodationDetails.csv"
+  },
+  "title": {
+    "text": "Exploring Irish Accomodations",
+    "anchor": "middle"
+  },
+  "transform": [
+    {"calculate": "'https://www.google.com/search?q=' + datum.Url", "as": "url"}
+      ],
+  "width":500,
+  "height":500,
+   "projection": {
+    "type": "conicConformal"
+  },
+   
+  "mark": "circle",
+  "encoding": {
+    "longitude": {
+      "field": "Longitude",
+      "type": "quantitative"
+    },
+    "latitude": {
+      "field": "Latitude",
+      "type": "quantitative"
+    },
+    "color":{"field":"Type", "type":"nominal"},
+    "tooltip":[ 
+      {"field": "Name","type": "nominal"},
+      {"field": "Type", "type": "nominal"},
+      {"field": "Telephone", "type": "nominal"}
+    ],
+    "href": {"field": "Url", "type": "nominal"}
+  },
+  "config": {
+    "legend": {
+      "orient":"top-left"
+    }
+ }
+}
